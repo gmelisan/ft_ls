@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/05 04:35:03 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/05 14:15:00 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,29 @@
 # include <dirent.h>
 # include "libft.h"
 
+/*
+** Allowed functions:
+**
+** write malloc free exit
+** opendir readdir closedir
+** stat	lstat
+** getpwuid getgrgid
+** listxattr getxattr
+** time ctime
+** readlink perror strerror
+*/
+
 struct s_options
 {
 	t_uint	long_format		: 1;
 	t_uint	recursive		: 1;
-	t_uint	show_all		: 1;
+	t_uint	all				: 1;
 	t_uint	reverse			: 1;
 	t_uint	sort_modtime	: 1;
 };
 
-void			parse_args(int argc, char *argv[], char ***p_names,
+int				parse_args(int argc, char *argv[], char ***p_names,
 							struct s_options *options);
+void			error_illegal_option(char *ft_ls_name, char option);
 
 #endif
