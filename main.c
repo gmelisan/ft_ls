@@ -6,26 +6,51 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/01 19:01:28 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/05 05:05:32 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+** Allowed functions:
+**
+** write malloc free exit
+** opendir readdir closedir
+** stat	lstat
+** getpwuid getgrgid
+** listxattr getxattr
+** time ctime
+** readlink perror strerror
+**
+** Options:
+**
+** -l (long format)
+** -R (recursive)
+** -a (show all)
+** -r (reverse order)
+** -t (sort by modified time)
+*/
+
 #include "ft_ls.h"
-#include <stdio.h>
 
 int		main(int argc, char *argv[])
 {
-	DIR				*dir;
-	struct dirent	*dent;
+	char			**names;
+	struct s_options options;
+	int i;
 
-	dir = opendir("./norightdir");
-	if (!dir)
+	parse_args(argc, argv, &names, &options);
+	i = 0;
+	while(names[i])
 	{
-		ft_fdprintf(2, "Opening directory");
-		return (1);
+		ft_printf("names[%d] = %s\n", i, names[i]); 
+		i++;
 	}
-	while ((dent = readdir(dir)) != NULL)
-		ft_printf("%s\n", dent->d_name);
-	closedir(dir);
+	ft_printf("options:\n");
+	ft_printf("-l: %d\n", options.long_format);
+	ft_printf("-R: %d\n", options.recursive);
+	ft_printf("-a: %d\n", options.show_all);
+	ft_printf("-r: %d\n", options.reverse);
+	ft_printf("-t: %d\n", options.sort_modtime);
+	ft_strarrdel(&names);
 	return (0);
 }

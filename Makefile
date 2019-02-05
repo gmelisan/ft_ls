@@ -6,7 +6,7 @@
 #    By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/01 16:04:42 by gmelisan          #+#    #+#              #
-#    Updated: 2019/02/01 16:55:12 by gmelisan         ###   ########.fr        #
+#    Updated: 2019/02/05 04:34:21 by gmelisan         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,11 +16,11 @@ LIBINC = ./libft/includes
 LIB = libft.a
 
 CC = clang
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g
 #CFLAGS += -Werror
 
 OBJ = $(sort \
-main.o )
+main.o parse_args.o)
 
 .PHONY: all clean fclean re
 
