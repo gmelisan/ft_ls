@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/05 14:16:52 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/05 19:19:43 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 ** -a (show all)
 ** -r (reverse order)
 ** -t (sort by modified time)
+** -- (cancel option parsing)
 */
 
 #include "ft_ls.h"

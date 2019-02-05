@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/05 14:15:00 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/05 19:07:58 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_LS_H
 
 # include <dirent.h>
+# include <stdlib.h>
 # include "libft.h"
 
 /*
