@@ -6,15 +6,20 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 13:52:39 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/12/04 13:53:53 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/06 17:33:01 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_swap(int *a, int *b)
-{
-	int c;
+#include <stdlib.h>
+#include "libft.h"
 
-	c = *a;
-	*a = *b;
-	*b = c;
+void	ft_swap(void *a, void *b, size_t size)
+{
+	void *tmp;
+	
+	tmp = malloc(size);
+	ft_memcpy(tmp, a, size);
+	ft_memcpy(a, b, size);
+	ft_memcpy(b, tmp, size);
+	free(tmp);
 }

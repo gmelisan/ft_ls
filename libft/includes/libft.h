@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:20:56 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/01 00:08:28 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/06 18:38:23 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
-void				ft_swap(int *a, int *b);
+void				ft_swap(void *a, void *b, size_t size);
 int					*ft_range(int min, int max);
 int					ft_power(int n, int power);
 void				*ft_realloc(void **ptr, size_t oldsize, size_t newsize);
@@ -138,5 +138,7 @@ int					ft_printf(const char *format, ...);
 int					ft_vprintf(const char *format, va_list ap);
 int					ft_fdprintf(int fd, const char *format, ...);
 int					ft_vfdprintf(int fd, const char *format, va_list ap);
+
+void				ft_strsort(char *arr[]);
 
 #endif
