@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/12 05:42:35 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:17:24 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <stdlib.h>
+# include <string.h>
+# include <stdio.h>
 # include "libft.h"
 
 /*
@@ -37,22 +39,28 @@ struct				s_options
 	t_uint			all				: 1;
 	t_uint			reverse			: 1;
 	t_uint			sort_modtime	: 1;
+	t_uint			one_column		: 1;
 };
 
-enum	e_type		{TYPE_NONE, TYPE_FILE, TYPE_DIR};
+/* enum	e_type		{TYPE_NONE, TYPE_FILE, TYPE_DIR}; */
 
 typedef struct		s_name
 {
-	char			*d_name;
-	enum e_type		type;
-	struct stat		*st;
+	char			*name;
+	struct stat		st;
 	char			*pw_name;
 	char			*gr_name;
-	struct s_name	*next;
+	/* struct s_name	*next; */
 }					t_name;
-stat
-void				parse_args(int argc, char *argv[], char ***p_names,
+
+void				parse_args(int argc, char *argv[], t_name **p_names,
 							struct s_options *options);
 void				error_illegal_option(char *ft_ls_name, char option);
+void				error_common(char *fod);
+void				sort_names(t_name *names);
+void				get_stats(t_name *names);
+void				main_loop(t_name *names, struct s_options options);
+void				show_dir(char *base, char *path, struct s_options options);
+int					is_dir(t_name name);
 
 #endif
