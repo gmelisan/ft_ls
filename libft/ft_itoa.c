@@ -6,11 +6,10 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 00:32:54 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/11/27 17:20:07 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:43:49 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 static int		count_digits(t_uint n)

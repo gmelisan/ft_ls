@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 04:04:01 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/05 19:20:10 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 06:34:05 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,12 @@ static void		parse_names(int argc, char *argv[], char *names[], int i)
 	}
 }
 
-int				parse_args(int argc, char *argv[], char ***p_names,
+void			parse_args(int argc, char *argv[], char ***p_names,
 												struct s_options *options)
 {
 	int		i;
-	int		e;
 	char	**names;
 
-	e = 0;
 	names = *p_names;
 	ft_bzero(options, sizeof(*options));
 	i = parse_options(argc, argv, options);
@@ -98,6 +96,5 @@ int				parse_args(int argc, char *argv[], char ***p_names,
 	if (!names[0])
 		set_default_path(names);
 	*p_names = names;
-	return (e);
 }
 

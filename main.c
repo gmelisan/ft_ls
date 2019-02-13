@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/06 18:39:29 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/12 07:52:06 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,47 +22,17 @@
 */
 
 #include "ft_ls.h"
-#include <stdio.h>
-
-
 
 int		main(int argc, char *argv[])
 {
-	char				**names;
+	char				*str_names[];
 	struct s_options	options;
-	int					i;
-	int					e;
+	t_name				*name;
 
-	int size;
-	
-	e = parse_args(argc, argv, &names, &options);
-
-	if (!e)
-	{
-		i = 0;
-		while(names[i])
-		{
-			ft_printf("names[%d] = %s\n", i, names[i]);
-			i++;
-		}
-		/* ft_printf("options:\n"); */
-		/* ft_printf("-l: %d\n", options.long_format); */
-		/* ft_printf("-R: %d\n", options.recursive); */
-		/* ft_printf("-a: %d\n", options.all); */
-		/* ft_printf("-r: %d\n", options.reverse); */
-		/* ft_printf("-t: %d\n", options.sort_modtime); */
-
-		ft_strsort(names);
-		ft_printf("After qsort: \n");
-		i = 0;
-		while(names[i])
-		{
-			ft_printf("names[%d] = %s\n", i, names[i]);
-			i++;
-		}
-	}
-
-	
+	parse_args(argc, argv, &names, &options);
+	sort_names(str_names);
+	init_list(name, str_names);
+	ft_ls(names, options);
 	ft_strarrdel(&names);
 	return (0);
 }

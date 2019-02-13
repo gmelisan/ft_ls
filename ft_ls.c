@@ -6,9 +6,14 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 16:00:06 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/04 16:00:42 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 11:46:45 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+void	ft_ls(char *names[], struct s_options options)
+{
+	
+
+}

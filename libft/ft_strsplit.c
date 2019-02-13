@@ -6,12 +6,11 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/25 23:15:49 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/12/04 14:19:32 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:43:41 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
 /*
 ** Counts words to get size for main array

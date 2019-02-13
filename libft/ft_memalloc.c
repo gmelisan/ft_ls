@@ -6,11 +6,10 @@
 /*   By: gmelisan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 18:31:24 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/11/23 19:24:37 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:41:14 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
 void	*ft_memalloc(size_t size)

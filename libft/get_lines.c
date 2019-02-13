@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 19:07:22 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/12/21 19:30:58 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:18:28 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void		strarr_del(char ***tab, int n)
 	int		i;
 	char	**t;
 
+	if (!tab || !*tab)
+		return ;
 	t = *tab;
 	i = 0;
 	while (i < n)
@@ -24,8 +26,14 @@ static void		strarr_del(char ***tab, int n)
 		ft_strdel(&(t[i]));
 		i++;
 	}
-	ft_memdel((void **)tab);
+	free(t);
+	*tab = NULL;
 }
+
+/*
+** Gets array of n lines readed from fd. Returns number of readed lines
+** or -1 in case of error.
+*/
 
 int				get_lines(int fd, char ***lines, int n)
 {

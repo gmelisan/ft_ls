@@ -6,13 +6,11 @@
 /*   By: gmelisan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/28 19:47:32 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/12/20 12:27:50 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:49:42 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft.h"
+#include "get_next_line.h"
 
 /*
 ** Returns index of \n, or index of first 0 after non-0.
@@ -137,6 +135,11 @@ static void	ft_lstremove(t_list **list, t_list *item)
 		i = i->next;
 	}
 }
+
+/*
+** Reads one line from fd. Line is a succession of characters until '\n'
+** or EOF. Returns 1 on success, 0 if EOF and -1 in case of error.
+*/
 
 int			get_next_line(const int fd, char **line)
 {

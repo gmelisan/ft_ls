@@ -6,7 +6,7 @@
 #    By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/01 16:04:42 by gmelisan          #+#    #+#              #
-#    Updated: 2019/02/05 14:15:41 by gmelisan         ###   ########.fr        #
+#    Updated: 2019/02/11 10:45:30 by gmelisan         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,7 +20,7 @@ CFLAGS = -Wall -Wextra -g
 #CFLAGS += -Werror
 
 OBJ = $(sort \
-main.o parse_args.o show_error.o)
+main.o parse_args.o show_error.o sort_names.o)
 
 .PHONY: all clean fclean re
 
@@ -33,6 +33,9 @@ $(NAME): $(LIBDIR)/$(LIB) $(OBJ)
 $(OBJ): $(NAME).h
 
 $(LIBDIR)/$(LIB):
+	@make -C $(LIBDIR)
+
+lib:
 	@make -C $(LIBDIR)
 
 %.o : %.c

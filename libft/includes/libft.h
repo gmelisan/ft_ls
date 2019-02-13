@@ -6,20 +6,23 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:20:56 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/06 18:38:23 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/11 05:56:51 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <unistd.h>
+# include <stdlib.h>
 # include <stdarg.h>
 # include <string.h>
 
-# define BUFF_SIZE 10
-
-typedef unsigned char	t_uchar;
-typedef unsigned int	t_uint;
+typedef unsigned char			t_uchar;
+typedef unsigned int			t_uint;
+typedef unsigned long int		t_ulint;
+typedef long long int			t_llint;
+typedef unsigned long long int	t_ullint;
 
 /*
 ** libc functions
@@ -56,8 +59,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_isspace(int c);
 int					ft_abs(int value);
-int					ft_sqrt(int nb);
-void				ft_strarrdel(char ***tab);
+
 
 /*
 ** Additional functions
@@ -91,32 +93,22 @@ void				ft_swap(void *a, void *b, size_t size);
 int					*ft_range(int min, int max);
 int					ft_power(int n, int power);
 void				*ft_realloc(void **ptr, size_t oldsize, size_t newsize);
-
-typedef struct		s_gnlbuf
-{
-	int				fd;
-	char			buf[BUFF_SIZE];
-}					t_gnlbuf;
-
-/*
-** Reads one line from fd. Line is a succession of characters until '\n'
-** or EOF. Returns 1 on success, 0 if EOF and -1 in case of error.
-*/
+void				ft_strarrdel(char ***tab);
 
 int					get_next_line(const int fd, char **line);
+int					get_lines(int fd, char ***lines, int n);
+
+int					ft_printf(const char *format, ...);
+int					ft_vprintf(const char *format, va_list ap);
+int					ft_fdprintf(int fd, const char *format, ...);
+int					ft_vfdprintf(int fd, const char *format, va_list ap);
+
+void				ft_qsort(void *ptr, size_t count, size_t size,
+						  int (*cmp)(const void *, const void *));
 
 /*
-** Gets array of n lines readed from fd. Returns number of readed lines
-** or -1 in case of error.
+** List functions
 */
-
-int					ft_get_lines(int fd, char ***lines, int n);
-
-/*
-** Lists manipulation functions
-*/
-
-void				ft_strarrdel(char ***tab);
 
 typedef struct		s_list
 {
@@ -133,12 +125,5 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 void				ft_lstaddback(t_list **alst, t_list *new);
 size_t				ft_lstsize(t_list *lst);
-
-int					ft_printf(const char *format, ...);
-int					ft_vprintf(const char *format, va_list ap);
-int					ft_fdprintf(int fd, const char *format, ...);
-int					ft_vfdprintf(int fd, const char *format, va_list ap);
-
-void				ft_strsort(char *arr[]);
 
 #endif
