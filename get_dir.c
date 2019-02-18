@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 17:41:30 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 18:08:13 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:07:21 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		get_dir(char *path, struct s_options options)
 	dir = opendir(path);
 	if (!dir)
 	{
-		error_common(path);
+		error_common(path, 0);
 		return ;
 	}
 	name = NULL;

@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 04:04:01 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 16:13:54 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 19:17:14 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,24 @@
 ** ls -
 **		file '-'
 ** ls ---
-**		illegal option '-'
+*n*		illegal option '-'
 */
 
 #include "ft_ls.h"
+
+static void		clear_1l(struct s_options *options)
+{
+	options->one_column = 0;
+	options->long_format = 0;
+}
 
 static int		parse_option(char *s, struct s_options *options)
 {
 	s++;
 	while (*s)
 	{
+		if (*s == 'l' || *s == '1')
+			clear_1l(options);
 		if (*s == 'l')
 			options->long_format = 1;
 		else if (*s == 'R')
@@ -58,10 +66,7 @@ static int		parse_options(int argc, char *argv[], struct s_options *options)
 		if (ft_strequ(argv[i], "-"))
 			return (i);
 		if (!parse_option(argv[i], options))
-		{
 			error_illegal_option(argv[0], argv[i][1]);
-			exit(1);
-		}
 	}
 	return (i);
 }

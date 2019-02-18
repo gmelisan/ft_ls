@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 19:17:24 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 20:08:04 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct		s_name
 {
 	char			*name;
 	struct stat		st;
+	struct stat		lst;
 	char			*pw_name;
 	char			*gr_name;
 	/* struct s_name	*next; */
@@ -56,11 +57,18 @@ typedef struct		s_name
 void				parse_args(int argc, char *argv[], t_name **p_names,
 							struct s_options *options);
 void				error_illegal_option(char *ft_ls_name, char option);
-void				error_common(char *fod);
-void				sort_names(t_name *names);
+void				error_common(char *fod, int die);
+void				sort_names(t_name *names,
+								int (*f)(const void *, const void *));
 void				get_stats(t_name *names);
 void				main_loop(t_name *names, struct s_options options);
 void				show_dir(char *base, char *path, struct s_options options);
+void				dirwalk(char *path, struct s_options options);
 int					is_dir(t_name name);
+int					is_link(t_name name);
+
+int					cmp_lex(const void *a, const void *b);
+int					cmp_rlex(const void *a, const void *b);
+int					cmp_modtime(const void *a, const void *b);
 
 #endif

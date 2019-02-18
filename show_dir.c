@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 16:43:16 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 20:03:27 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:07:21 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_list		*get_dir(char *path, struct s_options options)
 	dir = opendir(path);
 	if (!dir)
 	{
-		error_common(path);
+		error_common(path, 0);
 		return (NULL);
 	}
 	name = NULL;
@@ -97,22 +97,16 @@ void		show_dir(char *base, char *path, struct s_options options)
 	new_path = ft_strjoin(base, path);
 	name = get_dir(new_path, options);
 	ft_printf("path = %s\n", new_path);
-	ft_lstiter(name, show_onecol);
-	
-	/* if (is_dir_empty(name)) */
-	/* 	return ; */
-	
+	if (name)
+		ft_lstiter(name, show_onecol);
 	if (options.recursive)
 	{
 		cur = name;
-		//ft_printf("inside1\n");
 		while (cur)
 		{
-			//ft_printf("inside2\n");
 			if (is_dir(*((t_name *)cur->content)) && !is_dot_dotdot((t_name *)cur->content))
 			{
-				ft_printf("inside3\n");
-				ft_printf("%s:\n", new_path);
+				ft_printf("going to %s\n", new_path);
 				show_dir(add_slash(new_path), ((t_name *)cur->content)->name, options);
 			}
 			cur = cur->next;

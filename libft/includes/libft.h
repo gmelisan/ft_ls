@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:20:56 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/11 05:56:51 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 12:04:31 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int					ft_tolower(int c);
 int					ft_isspace(int c);
 int					ft_abs(int value);
 
-
 /*
 ** Additional functions
 */
@@ -78,6 +77,7 @@ int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strnjoin(int n, ...);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
@@ -104,7 +104,7 @@ int					ft_fdprintf(int fd, const char *format, ...);
 int					ft_vfdprintf(int fd, const char *format, va_list ap);
 
 void				ft_qsort(void *ptr, size_t count, size_t size,
-						  int (*cmp)(const void *, const void *));
+								int (*cmp)(const void *, const void *));
 
 /*
 ** List functions

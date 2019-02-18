@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:03:48 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 17:05:26 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:07:21 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_stats(t_name *names)
 	{
 		ret = lstat(names[i].name, &(names[i].st));
 		if (ret == -1)
-			error_common(names[i].name);
+			error_common(names[i].name, 0);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 16:59:22 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:35:09 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		main(int argc, char *argv[])
 	t_name				*names;
 
 	parse_args(argc, argv, &names, &options);
-	sort_names(names);
+	sort_names(names, cmp_lex);
 	get_stats(names);
 	main_loop(names, options);
 	free(names); // don't forget free strings!

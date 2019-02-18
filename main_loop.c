@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:35:40 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 19:19:15 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/18 20:06:42 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,14 @@ int			is_dir(t_name name)
 	return (0);
 }
 
-int			prepare(t_name *names)
+int			is_link(t_name name)
+{
+	if ((name.st.st_mode & S_IFMT) == S_IFLNK)
+		return (1);
+	return (0);
+}
+
+static int	prepare(t_name *names)
 {
 	int i;
 	int dir_count;
@@ -50,9 +57,10 @@ void		main_loop(t_name *names, struct s_options options)
 		{
 			/* if (dir_count > 1) */
 			/* 	ft_printf("%s:\n", names[i].name); */
-			show_dir("", names[i].name, options);
+			/* show_dir("", names[i].name, options); */
 			/* if (dir_count > 1 && names[i + 1].name) */
 			/* 	ft_printf("\n"); */
+			dirwalk(names[i].name, options);
 		}
 		i++;
 	}
