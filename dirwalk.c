@@ -6,39 +6,11 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 12:53:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 18:24:20 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:01:33 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static void	show_onecol(t_name *names, struct s_options options)
-{
-	int i;
-
-	i = 0;
-	while (names[i].name)
-	{
-		if (options.all || names[i].name[0] != '.')
-			ft_printf("%s\n", names[i].name);
-		i++;
-	}
-}
-
-static void	show_longformat(t_name *names, struct s_options options)
-{
-	int i;
-
-	i = 0;
-	while (names[i].name)
-	{
-		if (options.all || names[i].name[0] != '.')
-		{
-			ft_printf("%-30s, time = %ld\n", names[i].name, names[i].st.st_mtime);
-		}
-		i++;
-	}
-}
 
 t_name		*get_names(DIR *dir)
 {

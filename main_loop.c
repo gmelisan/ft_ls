@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:35:40 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 17:06:02 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:40:09 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	prepare(t_name *names)
 		if (names[i].st.st_dev && !is_dir(names[i]))
 			ft_printf("%s\n", names[i].name);
 		else
-			dir_count++;		
+			dir_count++;
 		i++;
 	}
 	return (dir_count);

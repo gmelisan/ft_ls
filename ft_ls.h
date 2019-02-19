@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 19:44:36 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:48:43 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,17 @@ typedef struct		s_name
 	/* struct s_name	*next; */
 }					t_name;
 
+typedef struct		s_longest
+{
+	int				link;
+	int				owner;
+	int				group;
+	int				bytes;
+	int				sp_major;
+	int				sp_minor;
+	int				time;
+}					t_longets;
+
 void				parse_args(int argc, char *argv[], t_name **p_names,
 							struct s_options *options);
 void				error_illegal_option(char *ft_ls_name, char option);
@@ -62,6 +73,8 @@ void				dirwalk(char *path, char *filename, struct s_options options);
 int					is_dir(t_name name);
 int					is_link(t_name name);
 void				clear_names(t_name **names);
+void				show_onecol(t_name *names, struct s_options options);
+void				show_longformat(t_name *names, struct s_options options);
 
 int					cmp_lex(const void *a, const void *b);
 int					cmp_rlex(const void *a, const void *b);
