@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:35:40 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/18 20:06:42 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 17:06:02 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,7 @@ void		main_loop(t_name *names, struct s_options options)
 	{
 		if (is_dir(names[i]))
 		{
-			/* if (dir_count > 1) */
-			/* 	ft_printf("%s:\n", names[i].name); */
-			/* show_dir("", names[i].name, options); */
-			/* if (dir_count > 1 && names[i + 1].name) */
-			/* 	ft_printf("\n"); */
-			dirwalk(names[i].name, options);
+			dirwalk(names[i].name, names[i].name, options);
 		}
 		i++;
 	}

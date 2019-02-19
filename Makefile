@@ -6,7 +6,7 @@
 #    By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/01 16:04:42 by gmelisan          #+#    #+#              #
-#    Updated: 2019/02/18 13:22:46 by gmelisan         ###   ########.fr        #
+#    Updated: 2019/02/19 19:50:15 by gmelisan         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -20,8 +20,8 @@ CFLAGS = -Wall -Wextra -g
 #CFLAGS += -Werror
 
 OBJ = $(sort \
-main.o parse_args.o show_error.o sort_names.o get_stats.o main_loop.o \
-show_dir.o dirwalk.o)
+main.o parse_args.o show_error.o sort_names.o main_loop.o \
+dirwalk.o clear_names.o cmp.o)
 
 .PHONY: all clean fclean re
 

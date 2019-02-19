@@ -6,78 +6,11 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 12:53:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/18 20:12:12 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:24:20 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-/* static void		delname(void *content, size_t size) */
-/* { */
-/* 	size = 0; */
-/* 	free(((t_name *)content)->name); */
-/* 	free(content); */
-/* } */
-
-/* void		show_onecolumn(t_list *dircontent, struct s_options options) */
-/* { */
-/* 	while (dircontent) */
-/* 	{ */
-/* 		if (options.all) */
-/* 			ft_printf("%s\n", ((t_name *)dircontent->content)->name); */
-/* 		else if (((t_name *)dircontent->content)->name[0] != '.') */
-/* 			ft_printf("%s\n", ((t_name *)dircontent->content)->name); */
-/* 		dircontent = dircontent->next; */
-/* 	} */
-/* } */
-
-/* t_name		*to_array(t_list *dircontent) */
-/* { */
-/* 	int			size; */
-/* 	t_name		*names; */
-/* 	t_list		cur; */
-/* 	int			i; */
-
-/* 	size = ft_lstsize(dircontent); */
-/* 	names = ft_memalloc(sizeof(*res) * (size + 1)); */
-/* 	cur = dircontent; */
-/* 	i = 0; */
-/* 	while (cur) */
-/* 	{ */
-/* 		names[i] = *((t_name *)dircontent->content); */
-/* 		cur = cur->next; */
-/* 	} */
-/* 	return (names); */
-/* } */
-
-/* t_list		*get_dircontent(char *path, struct s_options options) */
-/* { */
-/* 	struct dirent	*ent; */
-/* 	DIR				*dir; */
-/* 	t_list			*dircontent; */
-/* 	t_list			*tmp; */
-
-/* 	dir = opendir(path); */
-/* 	if (!dir) */
-/* 	{ */
-/* 		error_common(path, 0); */
-/* 		return (NULL); */
-/* 	} */
-/* 	dircontent = NULL; */
-/* 	while ((ent = readdir(dir))) */
-/* 	{ */
-/* 		tmp = ft_lstnew(NULL, 0); */
-/* 		tmp->content = ft_memalloc(sizeof(t_name)); */
-/* 		((t_name *)tmp->content)->name = ft_strdup(ent->d_name); */
-/* 		if (lstat(ent->d_name, &(((t_name *)tmp->content)->st)) == -1) */
-/* 			error_common(path, 0); */
-/* 		else */
-/* 			ft_lstaddback(&dircontent, tmp); */
-/* 	} */
-/* 	closedir(dir); */
-/* 	sort_dircontent(dircontent, options); */
-/* 	return (dircontent); */
-/* } */
 
 static void	show_onecol(t_name *names, struct s_options options)
 {
@@ -142,26 +75,24 @@ static void	prepare(char *path, t_name *names, struct s_options options)
 	{
 		fullpath = ft_strnjoin(3, path, "/", names[i].name);
 		lstat(fullpath, &(names[i].st));
-		if (is_link(names[i]))
-			stat(fullpath, &(names[i].lst)); /* not working */
 		free(fullpath);
 		i++;
 	}
 	len = i;
-	ft_qsort(names, len, sizeof(*names), options.reverse ? cmp_rlex : cmp_lex);
-	if (options.sort_modtime)
-		ft_qsort(names, len, sizeof(*names), cmp_modtime);
+	sort_names(names, len, options);
+	/* if (options.reverse) */
+	/* ft_qsort(names, len, sizeof(*names), options.reverse ? cmp_rlex : cmp_lex); */
 }
 
-void		dirwalk(char *path, struct s_options options)
+static t_name	*get_and_show(char *path, char *filename, struct s_options options)
 {
 	t_name		*names;
 	DIR			*dir;
 
 	if (!(dir = opendir(path)))
 	{
-		error_common(path, 0);
-		return ;
+		error_common(filename);
+		return (NULL);
 	}
 	names = get_names(dir);
 	closedir(dir);
@@ -172,13 +103,32 @@ void		dirwalk(char *path, struct s_options options)
 		show_onecol(names, options);
 	else
 		show_onecol(names, options);
+	return (names);
+}
 
-	/* t_list	*dircontent; */
-	/* t_name	*names; */
+void		dirwalk(char *path, char *filename, struct s_options options)
+{
+	t_name	*names;
+	char	*newpath;
+	int		i;
 
-	/* if (!(dircontent = get_dircontent(path, options))) */
-	/* 	return ; */
-	/* names = to_array(dircontent); */
-	/* ft_lstdel(&dircontent, delname); */
-	/* show_onecolumn(dircontent, options); */
+	names = get_and_show(path, filename, options);
+	if (!names)
+		return ;
+	i = -1;
+	if (options.recursive)
+		while (names[++i].name)
+		{
+			if (is_dir(names[i]))
+			{
+				if (ft_strequ(names[i].name, ".") || ft_strequ(names[i].name, "..") ||
+					!(options.all || names[i].name[0] != '.'))
+					continue ;
+				newpath = ft_strnjoin(3, path, "/", names[i].name);
+				ft_printf("\n%s:\n", newpath);
+				dirwalk(newpath, names[i].name, options);
+				free(newpath);
+			}
+		}
+	clear_names(&names);
 }

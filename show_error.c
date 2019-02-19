@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 13:50:13 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/18 14:03:38 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:11:31 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void	error_illegal_option(char *ft_ls_name, char option)
 	exit(1);
 }
 
-void	error_common(char *fod, int die)
+void	error_common(char *fod)
 {
 	char *out;
 
 	out = ft_strjoin("ft_ls: ", fod);
 	perror(out);
 	free(out);
-	if (die)
-		exit(1);
 }

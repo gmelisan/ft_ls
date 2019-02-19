@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_stats.c                                        :+:      :+:    :+:   */
+/*   clear_names.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 14:03:48 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/18 14:07:21 by gmelisan         ###   ########.fr       */
+/*   Created: 2019/02/19 16:02:06 by gmelisan          #+#    #+#             */
+/*   Updated: 2019/02/19 16:07:29 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	get_stats(t_name *names)
+void	clear_names(t_name **p_names)
 {
-	int i;
-	int ret;
+	t_name	*names;
+	int		i;
 
+	names = *p_names;
 	i = 0;
 	while (names[i].name)
 	{
-		ret = lstat(names[i].name, &(names[i].st));
-		if (ret == -1)
-			error_common(names[i].name, 0);
+		free(names[i].name);
 		i++;
 	}
+	free(names);
+	*p_names = NULL;
 }
