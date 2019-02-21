@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/20 13:20:56 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/18 12:04:31 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/20 18:16:27 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int					ft_vfdprintf(int fd, const char *format, va_list ap);
 
 void				ft_qsort(void *ptr, size_t count, size_t size,
 								int (*cmp)(const void *, const void *));
+int					ft_cntdigits(t_llint n, int base);
 
 /*
 ** List functions

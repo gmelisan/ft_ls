@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 12:53:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 20:01:33 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 01:08:09 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ t_name		*get_names(DIR *dir)
 	return (names);
 }
 
+void		get_usergroup(t_name *name)
+{
+	struct passwd	*pw;
+	struct group	*gr;
+
+	pw = getpwuid(name->st.st_uid);
+	if (!pw->pw_name)
+		name->pw_name = ft_itoa(name->st.st_uid);
+	else
+		name->pw_name = ft_strdup(pw->pw_name);
+	gr = getgrgid(name->st.st_gid);
+	if (!gr->gr_name)
+		name->gr_name = ft_itoa(name->st.st_gid);
+	else
+		name->gr_name = ft_strdup(gr->gr_name);
+}
+
 static void	prepare(char *path, t_name *names, struct s_options options)
 {
 	int i;
@@ -47,13 +64,18 @@ static void	prepare(char *path, t_name *names, struct s_options options)
 	{
 		fullpath = ft_strnjoin(3, path, "/", names[i].name);
 		lstat(fullpath, &(names[i].st));
+		if (is_link(names[i].st))
+		{
+			names[i].link = ft_memalloc(LINK_BUFSIZE);
+			readlink(fullpath, names[i].link, LINK_BUFSIZE - 1);
+		}
 		free(fullpath);
+		if (options.long_format)
+			get_usergroup(&names[i]);
 		i++;
 	}
 	len = i;
 	sort_names(names, len, options);
-	/* if (options.reverse) */
-	/* ft_qsort(names, len, sizeof(*names), options.reverse ? cmp_rlex : cmp_lex); */
 }
 
 static t_name	*get_and_show(char *path, char *filename, struct s_options options)
@@ -69,12 +91,7 @@ static t_name	*get_and_show(char *path, char *filename, struct s_options options
 	names = get_names(dir);
 	closedir(dir);
 	prepare(path, names, options);
-	if (options.long_format)
-		show_longformat(names, options);
-	else if (options.one_column)
-		show_onecol(names, options);
-	else
-		show_onecol(names, options);
+	show(names, options, 1);
 	return (names);
 }
 
@@ -91,7 +108,7 @@ void		dirwalk(char *path, char *filename, struct s_options options)
 	if (options.recursive)
 		while (names[++i].name)
 		{
-			if (is_dir(names[i]))
+			if (is_dir(names[i].st))
 			{
 				if (ft_strequ(names[i].name, ".") || ft_strequ(names[i].name, "..") ||
 					!(options.all || names[i].name[0] != '.'))

@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 00:24:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/11 05:51:44 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:48:22 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void		quicksort(struct s_qsortarr *a, int first, int last)
 }
 
 void			ft_qsort(void *ptr, size_t count, size_t size,
-						 int (*cmp)(const void *, const void *))
+							int (*cmp)(const void *, const void *))
 {
 	struct s_qsortarr qsortarr;
 

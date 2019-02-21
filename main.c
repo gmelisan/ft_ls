@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 19:43:27 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/20 19:54:26 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,12 @@
 /* 	} */
 /* } */
 
-static void	prepare(t_name *names, struct s_options options)
-{
-	int i;
-	int len;
-
-	i = 0;
-	while (names[i].name)
-	{
-		if (lstat(names[i].name, &(names[i].st)) == -1)
-			error_common(names[i].name);
-		i++;
-	}
-	len = i;
-	sort_names(names, len, options);
-}
-
 int		main(int argc, char *argv[])
 {
 	struct s_options	options;
 	t_name				*names;
 
 	parse_args(argc, argv, &names, &options);
-	prepare(names, options);
 	main_loop(names, options);
 	clear_names(&names);
 	return (0);

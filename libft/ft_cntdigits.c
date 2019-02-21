@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   ft_cntdigits.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/04 13:52:39 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/13 11:48:38 by gmelisan         ###   ########.fr       */
+/*   Created: 2019/02/20 18:13:43 by gmelisan          #+#    #+#             */
+/*   Updated: 2019/02/20 18:18:45 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-void	ft_swap(void *a, void *b, size_t size)
+int		ft_cntdigits(t_llint n, int base)
 {
-	void *tmp;
+	int res;
 
-	tmp = malloc(size);
-	ft_memcpy(tmp, a, size);
-	ft_memcpy(a, b, size);
-	ft_memcpy(b, tmp, size);
-	free(tmp);
+	res = 1;
+	while ((n = n / base))
+		res++;
+	return (res);
 }

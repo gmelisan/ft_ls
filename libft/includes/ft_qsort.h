@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 05:52:01 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/11 05:55:05 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/13 11:48:59 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ struct				s_qsortarr
 };
 
 void				ft_qsort(void *ptr, size_t count, size_t size,
-						  int (*cmp)(const void *, const void *));
+								int (*cmp)(const void *, const void *));
 
 #endif

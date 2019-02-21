@@ -6,7 +6,7 @@
 #    By: kemmeric <kemmeric@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 12:48:23 by gmelisan          #+#    #+#              #
-#    Updated: 2019/02/18 12:00:39 by gmelisan         ###   ########.fr        #
+#    Updated: 2019/02/20 18:17:57 by gmelisan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o ft_lstnew.o \
 ft_lstdelone.o ft_lstdel.o ft_lstadd.o ft_lstiter.o ft_lstmap.o \
 ft_swap.o ft_range.o ft_power.o ft_realloc.o get_next_line.o \
 get_lines.o ft_lstaddback.o ft_strarrdel.o get_lines.o ft_lstsize.o \
-ft_atoi.o ft_itoa.o ft_qsort.o ft_strnjoin.o)
+ft_atoi.o ft_itoa.o ft_qsort.o ft_strnjoin.o ft_cntdigits.o)
 
 OBJ_FTPRINTF = $(sort $(addprefix $(FTPRINTF_DIR)/, \
 ft_printf.o ft_vprintf.o ft_fdprintf.o ft_vfdprintf.o \
