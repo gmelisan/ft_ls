@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 10:43:16 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 19:34:37 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 18:49:03 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void postsort_mtime(t_name *names, int len, struct s_options options)
 		reverse(names, len);
 }
 
-void	sort_names(t_name *names, int len, struct s_options options)
+void		sort_names_len(t_name *names, int len, struct s_options options)
 {
 	if (options.sort_modtime)
 	{
@@ -60,3 +60,29 @@ void	sort_names(t_name *names, int len, struct s_options options)
 	else
 		ft_qsort(names, len, sizeof(*names), options.reverse ? cmp_rlex : cmp_lex);
 }
+
+void		sort_lex(t_name *names)
+{
+	int len;
+
+	len = 0;
+	while(names[len].name)
+		len++;
+	ft_qsort(names, len, sizeof(*names), cmp_lex);
+}
+
+void		sort_names(t_name *names, struct s_options options)
+{
+	int len;
+
+	len = 0;
+	while(names[len].name)
+		len++;
+	sort_names_len(names, len, options);
+}
+
+/* sandbox_cmd("touch C && touch -t 201212101830.55 c && mkdir -p sbox sbox1"); */
+/* 	sandbox_cmd("touch -t 201312101830.55 B"); */
+/* 	sandbox_cmd("touch -t 201312101830.55 a"); */
+/* 	// print_ls_debug(cmd); */
+/* 	mt_assert(strcmp(ls(cmd), ft_ls(cmd)) == 0); */

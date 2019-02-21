@@ -6,11 +6,13 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 13:48:17 by gmelisan          #+#    #+#             */
-/*   Updated: 2018/12/04 17:08:59 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:25:36 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_abs(int value)
+#include "libft.h"
+
+t_llint		ft_abs(t_llint value)
 {
 	return (value > 0 ? value : -value);
 }

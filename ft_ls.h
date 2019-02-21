@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 01:03:34 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 18:49:51 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pwd.h>
 # include <grp.h>
 # include <time.h>
+# include <limits.h>
 # include "libft.h"
 
 /*
@@ -70,7 +71,7 @@ struct				s_longest
 	int				bytes;
 	int				sp_major;
 	int				sp_minor;
-	int				time;		/* delete */
+	//int				time;
 };
 
 struct				s_modechars
@@ -92,9 +93,10 @@ void				parse_args(int argc, char *argv[], t_name **p_names,
 							struct s_options *options);
 void				error_illegal_option(char *ft_ls_name, char option);
 void				error_common(char *fod);
-void				sort_names(t_name *names, int len, struct s_options options);
+void				sort_names(t_name *names, struct s_options options);
+void				sort_names_len(t_name *names, int len, struct s_options options);
+void				sort_lex(t_name *names);
 void				main_loop(t_name *names, struct s_options options);
-//void				show_dir(char *base, char *path, struct s_options options);
 void				dirwalk(char *path, char *filename, struct s_options options);
 int					is_dir(struct stat st);
 int					is_link(struct stat st);

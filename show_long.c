@@ -6,13 +6,15 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 22:29:57 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 01:18:55 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:55:45 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
 /*
+**            1         2
+**  012345678901234567890123456
 ** "Wed Jun 30 21:49:08 1993\n" ->
 ** year_flag ? "Jun 30 21:49" : "Jun 30  1993"
 */
@@ -20,12 +22,22 @@
 static char		*convert_time(char *str, int year_flag)
 {
 	char *res;
+	int i;
+	int len;
 
-	res = ft_strnew(13);
+	res = ft_strnew(20);
 	ft_memcpy(res, str + 4, 6);
 	res[6] = ' ';
 	if (year_flag)
-		ft_memcpy(res + 7, str + 19, 5);
+	{
+		i = 19;
+		while (str[i] == ' ')
+			i++;
+		len = 0;
+		while (str[i + len] != '\n' && str[i + len])
+			len++;
+		ft_memcpy(res + 7, str + i - 1, len + 1);
+	}
 	else
 		ft_memcpy(res + 7, str + 11, 5);
 	return (res);
@@ -41,8 +53,10 @@ static void		update_longest(t_name *names, int i, struct s_longest *longest)
 	if (names[i].st.st_size > longest->bytes)
 			longest->bytes = names[i].st.st_size;
 	curtime = time(NULL);
-	names[i].timestr = convert_time(ctime(&names[i].st.st_mtime),
-						curtime - names[i].st.st_mtime < YEAR_BORDER ? 0 : 1);
+	if (ft_abs(curtime - names[i].st.st_mtime) < YEAR_BORDER)
+		names[i].timestr = convert_time(ctime(&names[i].st.st_mtime), 0);
+	else
+		names[i].timestr = convert_time(ctime(&names[i].st.st_mtime), 1);
 	len = ft_strlen(names[i].pw_name);
 	if (len > longest->owner)
 			longest->owner = len;
@@ -149,6 +163,7 @@ static void			show_long_one(t_name *names, int i,
 	if (names[i].link)
 		ft_printf(" -> %s", names[i].link);
 	ft_putchar('\n');
+	/* ft_printf(" (%s)", ctime(&(names[i].st.st_mtime))); */
 }
 
 void				show_long(t_name *names, struct s_options options,
@@ -163,8 +178,11 @@ void				show_long(t_name *names, struct s_options options,
 	/* 		  longest.link, longest.owner, longest.group, longest.bytes, longest.time); */
 	if (showtotal)
 		ft_printf("total %d\n", total);
-	i = -1;
-	while (names[++i].name)
+	i = 0;
+	while (names[i].name)
+	{
 		if (options.all || names[i].name[0] != '.')
 			show_long_one(names, i, longest);
+		i++;
+	}
 }

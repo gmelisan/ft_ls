@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 04:04:01 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/20 20:37:21 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:38:38 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,17 @@ static int		parse_option(char *s, struct s_options *options)
 		else if (*s == '1')
 			options->one_column = 1;
 		else
-			return (0);
+			return (*s);
 		s++;
 	}
-	return (1);
+	return (0);
 }
 
 
 static int		parse_options(int argc, char *argv[], struct s_options *options)
 {
-	int i;
+	int		i;
+	char	opt;
 
 	i = 0;
 	while (++i < argc)
@@ -65,8 +66,9 @@ static int		parse_options(int argc, char *argv[], struct s_options *options)
 			return (i);
 		if (ft_strequ(argv[i], "-"))
 			return (i);
-		if (!parse_option(argv[i], options))
-			error_illegal_option(argv[0], argv[i][1]);
+		opt = parse_option(argv[i], options);
+		if (opt != 0)
+			error_illegal_option(argv[0], opt);
 	}
 	return (i);
 }

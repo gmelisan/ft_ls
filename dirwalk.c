@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 12:53:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 01:08:09 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 18:31:10 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	prepare(char *path, t_name *names, struct s_options options)
 		i++;
 	}
 	len = i;
-	sort_names(names, len, options);
+	sort_names_len(names, len, options);
 }
 
 static t_name	*get_and_show(char *path, char *filename, struct s_options options)

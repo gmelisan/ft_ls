@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 18:16:48 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/19 18:16:57 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:27:39 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,16 @@ int		cmp_rlex(const void *a, const void *b)
 
 int		cmp_modtime(const void *a, const void *b)
 {
-	time_t time_a;
-	time_t time_b;
+	time_t	time_a;
+	time_t	time_b;
+	long	res;
 
 	time_a = ((t_name *)a)->st.st_mtime;
 	time_b = ((t_name *)b)->st.st_mtime;
-	return (time_b - time_a);
+	res = time_b - time_a;
+	if (res > INT_MAX)
+		res = 1;
+	else if (res < INT_MIN)
+		res = -1;
+	return (res);
 }

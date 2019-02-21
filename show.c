@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 20:01:38 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/20 23:31:15 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/21 18:20:56 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@ static void		show_onecol(t_name *names, struct s_options options)
 
 	i = -1;
 	while (names[++i].name)
+	{
+		if (!names[i].st.st_ino)
+			continue ;
 		if (options.all || names[i].name[0] != '.')
 		{
 			ft_putstr(names[i].name);
 			ft_putchar('\n');
 		}
+	}
 }
 
 void			show(t_name *names, struct s_options options, int showtotal)
