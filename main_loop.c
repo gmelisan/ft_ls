@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:35:40 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 19:15:36 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/24 01:55:56 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static void	prepare(t_name *names, struct s_options options, int *fc, int *dc)
 	sort_lex(names);
 	while (names[i].name)
 	{
-		if (lstat(names[i].name, &(names[i].st)) == -1)
+		if (options.long_format && lstat(names[i].name, &(names[i].st)) == -1)
+			error_common(names[i].name);
+		else if (stat(names[i].name, &(names[i].st)) == -1)
 			error_common(names[i].name);
 		if (is_link(names[i].st))
 		{
@@ -99,7 +101,7 @@ void		main_loop(t_name *names, struct s_options options)
 	i = -1;
 	first = 1;
 	while (names[++i].name)
-		if (is_dir(names[i].st)) // todo: case when printing symlink. 
+		if (is_dir(names[i].st))
 		{
 			if (dircount > 1)
 				ft_printf(first && !filecount ? "%s:\n" : "\n%s:\n", names[i].name);

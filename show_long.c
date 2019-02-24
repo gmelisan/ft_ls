@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 22:29:57 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 17:55:45 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/24 04:36:42 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,32 @@ static char		*convert_time(char *str, int year_flag)
 	return (res);
 }
 
+static int		is_device(struct stat st)
+{
+	return (((st.st_mode & S_IFMT) == S_IFBLK) ||
+			((st.st_mode & S_IFMT) == S_IFCHR));
+}
+
+/*
+** Major/minor numbers:
+**
+** https://stackoverflow.com/questions/4309882/
+** device-number-in-stat-command-output
+** 
+** https://stackoverflow.com/questions/35392291/
+** how-to-convert-between-a-dev-t-and-major-minor-device-numbers
+*/
+
+static int		get_major(struct stat st)
+{
+	return ((int)(((t_uint)(st.st_rdev) >> 8) & 0xFF));
+}
+
+static int		get_minor(struct stat st)
+{
+	return ((int)((st.st_rdev) & 0xff));
+}
+
 static void		update_longest(t_name *names, int i, struct s_longest *longest)
 {
 	int		len;
@@ -63,6 +89,10 @@ static void		update_longest(t_name *names, int i, struct s_longest *longest)
 	len = ft_strlen(names[i].gr_name);
 	if (len > longest->group)
 		longest->group = len;
+	if (is_device(names[i].st) && (get_major(names[i].st) > longest->sp_major))
+		longest->sp_major = get_major(names[i].st);
+	if (is_device(names[i].st) && (get_minor(names[i].st) > longest->sp_minor))
+		longest->sp_minor = get_minor(names[i].st);
 }
 
 static struct s_longest	get_longest(t_name *names, struct s_options options,
@@ -83,6 +113,8 @@ static struct s_longest	get_longest(t_name *names, struct s_options options,
 	}
 	longest.link = ft_cntdigits(longest.link, 10);
 	longest.bytes = ft_cntdigits(longest.bytes, 10);
+	longest.sp_major = ft_cntdigits(longest.sp_major, 10);
+	longest.sp_minor = ft_cntdigits(longest.sp_minor, 10);
 	return (longest);
 }
 
@@ -151,13 +183,18 @@ static void			show_long_one(t_name *names, int i,
 
 	bzero((void *)&mc, sizeof(mc));
 	fill_modechars(&mc, names[i].st);
-	/* ft_printf("%5d ", names[i].st.st_blocks); */
 	ft_printf("%c%c%c%c%c%c%c%c%c%c%c", mc.type,
-			  mc.ur, mc.uw, mc.ux, mc.gr, mc.gw, mc.gx, mc.or, mc.ow, mc.ox, mc.att);
+		mc.ur, mc.uw, mc.ux, mc.gr, mc.gw, mc.gx, mc.or, mc.ow, mc.ox, mc.att);
 	ft_printf(" %*d", longest.link, names[i].st.st_nlink);
 	ft_printf(" %*s", longest.owner, names[i].pw_name);
 	ft_printf("  %-*s", longest.group, names[i].gr_name);
-	ft_printf("  %*d", longest.bytes, names[i].st.st_size);
+	if (is_device(names[i].st))
+	{
+		ft_printf("  %*d,", longest.sp_major, get_major(names[i].st));
+		ft_printf(" %*d", longest.sp_minor, get_minor(names[i].st));
+	}
+	else
+		ft_printf("  %*d", longest.bytes, names[i].st.st_size);
 	ft_printf(" %s", names[i].timestr);
 	ft_printf(" %s", names[i].name);
 	if (names[i].link)
@@ -174,15 +211,14 @@ void				show_long(t_name *names, struct s_options options,
 	int					total;
 	
 	longest = get_longest(names, options, &total);
-	/* ft_printf("link = %d, owner = %d, group = %d, bytes = %d, time = %d\n", */
-	/* 		  longest.link, longest.owner, longest.group, longest.bytes, longest.time); */
 	if (showtotal)
 		ft_printf("total %d\n", total);
-	i = 0;
-	while (names[i].name)
+	i = -1;
+	while (names[++i].name)
 	{
+		if (!names[i].st.st_ino)
+			continue ;
 		if (options.all || names[i].name[0] != '.')
 			show_long_one(names, i, longest);
-		i++;
 	}
 }
