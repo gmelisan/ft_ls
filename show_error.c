@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 13:50:13 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/26 16:05:45 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:53:24 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	error_common(char *fod)
 {
 	char *out;
 
-	out = ft_strjoin("ls: ", fod);
+	out = ft_strjoin("ft_ls: ", fod);
 	perror(out);
 	free(out);
 }
