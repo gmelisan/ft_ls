@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   show.c                                             :+:      :+:    :+:   */
+/*   get_spdevnum.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/19 20:01:38 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/26 16:49:27 by gmelisan         ###   ########.fr       */
+/*   Created: 2019/02/26 17:21:39 by gmelisan          #+#    #+#             */
+/*   Updated: 2019/02/26 17:21:59 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void		show_onecol(t_name *names)
-{
-	int i;
+/*
+** Major/minor numbers:
+**
+** https://stackoverflow.com/questions/4309882/
+** device-number-in-stat-command-output
+**
+** https://stackoverflow.com/questions/35392291/
+** how-to-convert-between-a-dev-t-and-major-minor-device-numbers
+*/
 
-	i = -1;
-	while (names[++i].name)
-	{
-		if (!names[i].st.st_ino)
-			continue ;
-		ft_printf("%s\n", names[i].name);
-	}
+int		get_major(struct stat st)
+{
+	return ((int)(((t_uint)(st.st_rdev) >> 24) & 0xFF));
 }
 
-void			show(t_name *names, struct s_options options, int showtotal)
+int		get_minor(struct stat st)
 {
-	if (options.long_format)
-		show_long(names, options, showtotal);
-	else if (options.one_column)
-		show_onecol(names);
-	else
-		show_onecol(names);
+	return ((int)((st.st_rdev) & 0xFF));
 }

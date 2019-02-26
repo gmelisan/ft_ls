@@ -6,41 +6,36 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 14:35:40 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/24 01:55:56 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:58:35 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int			is_dir(struct stat st)
+static void		getstat(t_name *names, int i, struct s_options options)
 {
-	if ((st.st_mode & S_IFMT) == S_IFDIR)
-		return (1);
-	return (0);
-}
+	int ret;
 
-int			is_link(struct stat st)
-{
-	if ((st.st_mode & S_IFMT) == S_IFLNK)
-		return (1);
-	return (0);
-}
-
-int			is_linkdir(t_name name)
-{
-	struct stat lst;
-
-	bzero(&lst, sizeof(lst));
-	if (is_link(name.st))
+	if (options.long_format)
 	{
-		stat(name.name, &lst);
-		if (is_dir(lst))
-			return (1);
+		ret = lstat(names[i].name, &(names[i].st));
+		if (ret == -1)
+			error_common(names[i].name);
 	}
-	return (0);
+	else
+	{
+		ret = stat(names[i].name, &(names[i].st));
+		if (ret == -1)
+		{
+			ret = lstat(names[i].name, &(names[i].st));
+			if (ret == -1)
+				error_common(names[i].name);
+		}
+	}
 }
 
-static void	prepare(t_name *names, struct s_options options, int *fc, int *dc)
+static void		prepare(t_name *names, struct s_options options,
+						int *fc, int *dc)
 {
 	int i;
 
@@ -49,15 +44,13 @@ static void	prepare(t_name *names, struct s_options options, int *fc, int *dc)
 	sort_lex(names);
 	while (names[i].name)
 	{
-		if (options.long_format && lstat(names[i].name, &(names[i].st)) == -1)
-			error_common(names[i].name);
-		else if (stat(names[i].name, &(names[i].st)) == -1)
-			error_common(names[i].name);
+		getstat(names, i, options);
 		if (is_link(names[i].st))
 		{
 			names[i].link = ft_memalloc(LINK_BUFSIZE);
 			readlink(names[i].name, names[i].link, LINK_BUFSIZE - 1);
 		}
+		names[i].xattr = listxattr(names[i].name, NULL, 0, XATTR_NOFOLLOW);
 		if (options.long_format)
 			get_usergroup(&names[i]);
 		if (!is_dir(names[i].st))
@@ -68,7 +61,7 @@ static void	prepare(t_name *names, struct s_options options, int *fc, int *dc)
 	*dc = i;
 }
 
-static t_name		*get_files(t_name *names, int len)
+static t_name	*get_files(t_name *names, int len)
 {
 	t_name	*files;
 	int		i;
@@ -83,7 +76,7 @@ static t_name		*get_files(t_name *names, int len)
 	return (files);
 }
 
-void		main_loop(t_name *names, struct s_options options)
+void			main_loop(t_name *names, struct s_options options)
 {
 	int		i;
 	int		filecount;
@@ -104,7 +97,8 @@ void		main_loop(t_name *names, struct s_options options)
 		if (is_dir(names[i].st))
 		{
 			if (dircount > 1)
-				ft_printf(first && !filecount ? "%s:\n" : "\n%s:\n", names[i].name);
+				ft_printf(first && !filecount ?
+							"%s:\n" : "\n%s:\n", names[i].name);
 			first = 0;
 			dirwalk(names[i].name, names[i].name, options);
 		}

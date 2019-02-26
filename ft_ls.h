@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:02:55 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/24 04:36:53 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 17:25:44 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <dirent.h>
 # include <sys/stat.h>
+# include <sys/xattr.h>
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
@@ -61,6 +62,7 @@ typedef struct		s_name
 	char			*gr_name;
 	char			*timestr;
 	char			*link;
+	int				xattr;
 }					t_name;
 
 struct				s_longest
@@ -71,7 +73,6 @@ struct				s_longest
 	int				bytes;
 	int				sp_major;
 	int				sp_minor;
-	//int				time;
 };
 
 struct				s_modechars
@@ -86,7 +87,7 @@ struct				s_modechars
 	char			or;
 	char			ow;
 	char			ox;
-	char			att;
+	char			xattr;
 };
 
 void				parse_args(int argc, char *argv[], t_name **p_names,
@@ -94,19 +95,34 @@ void				parse_args(int argc, char *argv[], t_name **p_names,
 void				error_illegal_option(char *ft_ls_name, char option);
 void				error_common(char *fod);
 void				sort_names(t_name *names, struct s_options options);
-void				sort_names_len(t_name *names, int len, struct s_options options);
+void				sort_names_len(t_name *names, int len,
+										struct s_options options);
 void				sort_lex(t_name *names);
 void				main_loop(t_name *names, struct s_options options);
-void				dirwalk(char *path, char *filename, struct s_options options);
+void				dirwalk(char *path, char *filename,
+							struct s_options options);
 int					is_dir(struct stat st);
 int					is_link(struct stat st);
 void				clear_names(t_name **names);
-void				show(t_name *names, struct s_options options, int showtotal);
-void				show_long(t_name *names, struct s_options options, int showtotal);
+void				show(t_name *names, struct s_options options,
+							int showtotal);
+void				show_long(t_name *names, struct s_options options,
+							int showtotal);
+struct s_longest	get_longest(t_name *names, struct s_options options,
+								int *total);
+void				fill_modechars(struct s_modechars *mc, struct stat st);
 void				get_usergroup(t_name *name);
 
 int					cmp_lex(const void *a, const void *b);
 int					cmp_rlex(const void *a, const void *b);
 int					cmp_modtime(const void *a, const void *b);
+
+int					is_dir(struct stat st);
+int					is_link(struct stat st);
+int					is_linkdir(t_name name);
+int					is_device(struct stat st);
+
+int					get_major(struct stat st);
+int					get_minor(struct stat st);
 
 #endif

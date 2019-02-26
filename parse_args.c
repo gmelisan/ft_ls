@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 04:04:01 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 17:38:38 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:51:09 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 ** ls -
 **		file '-'
 ** ls ---
-*n*		illegal option '-'
+**		illegal option '-'
 */
 
 #include "ft_ls.h"
@@ -50,7 +50,6 @@ static int		parse_option(char *s, struct s_options *options)
 	}
 	return (0);
 }
-
 
 static int		parse_options(int argc, char *argv[], struct s_options *options)
 {
@@ -89,7 +88,7 @@ void			parse_args(int argc, char *argv[], t_name **p_names,
 												struct s_options *options)
 {
 	int		i;
-	t_name *names;
+	t_name	*names;
 
 	names = *p_names;
 	ft_bzero(options, sizeof(*options));

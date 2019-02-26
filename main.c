@@ -6,7 +6,7 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/01 16:03:41 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/24 02:44:54 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:48:45 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 */
 
 #include "ft_ls.h"
-
-// todo: rwx - not always x, acl/xattr, device shit
 
 int		main(int argc, char *argv[])
 {

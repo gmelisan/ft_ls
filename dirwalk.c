@@ -6,13 +6,13 @@
 /*   By: gmelisan <gmelisan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 12:53:21 by gmelisan          #+#    #+#             */
-/*   Updated: 2019/02/21 18:31:10 by gmelisan         ###   ########.fr       */
+/*   Updated: 2019/02/26 16:56:47 by gmelisan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_name		*get_names(DIR *dir)
+static t_name	*get_names(DIR *dir, struct s_options options)
 {
 	struct dirent	*ent;
 	t_name			*names;
@@ -30,13 +30,16 @@ t_name		*get_names(DIR *dir)
 			ft_realloc((void **)&names, sizeof(*names) * i,
 										sizeof(*names) * size);
 		}
-		names[i].name = ft_strdup(ent->d_name);
-		i++;
+		if (options.all || ent->d_name[0] != '.')
+		{
+			names[i].name = ft_strdup(ent->d_name);
+			i++;
+		}
 	}
 	return (names);
 }
 
-void		get_usergroup(t_name *name)
+void			get_usergroup(t_name *name)
 {
 	struct passwd	*pw;
 	struct group	*gr;
@@ -53,11 +56,11 @@ void		get_usergroup(t_name *name)
 		name->gr_name = ft_strdup(gr->gr_name);
 }
 
-static void	prepare(char *path, t_name *names, struct s_options options)
+static void		prepare(char *path, t_name *names, struct s_options options)
 {
-	int i;
-	int len;
-	char *fullpath;
+	int		i;
+	int		len;
+	char	*fullpath;
 
 	i = 0;
 	while (names[i].name)
@@ -69,6 +72,7 @@ static void	prepare(char *path, t_name *names, struct s_options options)
 			names[i].link = ft_memalloc(LINK_BUFSIZE);
 			readlink(fullpath, names[i].link, LINK_BUFSIZE - 1);
 		}
+		names[i].xattr = listxattr(fullpath, NULL, 0, XATTR_NOFOLLOW);
 		free(fullpath);
 		if (options.long_format)
 			get_usergroup(&names[i]);
@@ -78,7 +82,8 @@ static void	prepare(char *path, t_name *names, struct s_options options)
 	sort_names_len(names, len, options);
 }
 
-static t_name	*get_and_show(char *path, char *filename, struct s_options options)
+static t_name	*get_and_show(char *path, char *filename,
+									struct s_options options)
 {
 	t_name		*names;
 	DIR			*dir;
@@ -88,14 +93,14 @@ static t_name	*get_and_show(char *path, char *filename, struct s_options options
 		error_common(filename);
 		return (NULL);
 	}
-	names = get_names(dir);
+	names = get_names(dir, options);
 	closedir(dir);
 	prepare(path, names, options);
 	show(names, options, 1);
 	return (names);
 }
 
-void		dirwalk(char *path, char *filename, struct s_options options)
+void			dirwalk(char *path, char *filename, struct s_options options)
 {
 	t_name	*names;
 	char	*newpath;
@@ -110,8 +115,8 @@ void		dirwalk(char *path, char *filename, struct s_options options)
 		{
 			if (is_dir(names[i].st))
 			{
-				if (ft_strequ(names[i].name, ".") || ft_strequ(names[i].name, "..") ||
-					!(options.all || names[i].name[0] != '.'))
+				if (ft_strequ(names[i].name, ".") ||
+					ft_strequ(names[i].name, ".."))
 					continue ;
 				newpath = ft_strnjoin(3, path, "/", names[i].name);
 				ft_printf("\n%s:\n", newpath);
